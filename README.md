@@ -1,5 +1,7 @@
 # My Portfolio Website
-#@note:This project is still in works..
+
+# note:This project is still in works..
+
 ![No Logo for now](link-to-my-logo.png)
 
 ## Overview
