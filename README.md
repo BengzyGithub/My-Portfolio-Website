@@ -21,6 +21,8 @@
   **Work Experience and Education:** Users can input and manage their work experience and educational background.
 
 - **About Me Section:** A dedicated section for users to share information about themselves, such as their full name and bio.
+- **Projects.ejs:** A dedicated Page for users to view information about their projects, this page has only vieawable access and no edits are allowed.
+- **Porfolio Page:** An immersive site where users can view all information about themselves including but not limited to "projects, skills, work exp, school" etc.
 
 ## Installation
 
