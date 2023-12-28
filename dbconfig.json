@@ -1,0 +1,9 @@
+{
+    "host": "localhost",
+    "user": "root",
+    "password": "",//update this with your database password
+    "database": "webportfolio",
+    "port": 3306,
+    "insecureAuth": true
+  }
+  
