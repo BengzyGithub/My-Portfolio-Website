@@ -1,6 +1,6 @@
 # My Portfolio Website
 
-![Project Logo](link-to-my-logo.png)
+![No Logo for now](link-to-my-logo.png)
 
 ## Overview
 
