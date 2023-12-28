@@ -27,23 +27,23 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Set up your MySQL connection
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'Bengz2byZ*',
-  database: 'webportfolio',
-  port: 3306,
-  insecureAuth: true
-});
+// creating a file stream to read data to/from
+const fs = require('fs');
+
+// Read database configuration from the file (dbconfig.json)
+const dbConfigPath = path.join(__dirname, 'dbconfig.json');
+const dbConfig = JSON.parse(fs.readFileSync(dbConfigPath, 'utf8'));
+
+// Set up MySQL connection using the configuration from the file
+const connection = mysql.createConnection(dbConfig);
+
 
 connection.connect();
 
 // Passport local strategy for username/password login
 passport.use(new LocalStrategy(
   (username, password, done) => {
-    // Implement your own logic to check username and password in the database
-    // Example:
+    // logic to check username and password in the database
     connection.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, results) => {
       if (err) throw err;
 
@@ -81,7 +81,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  // Implement your own logic to retrieve user from the database
+  // logic to retrieve user from the database
   connection.query('SELECT * FROM users WHERE id = ?', [id], (err, results) => {
     if (err) {
       return done(err, null);
@@ -101,8 +101,8 @@ passport.deserializeUser((id, done) => {
 app.set('lib', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// Set up your routes
-// Example route for the login page
+
+// Route for the login page
 app.get('/login', (_req, res) => {
   const data = {
     username: 'exampleUser',
@@ -124,7 +124,7 @@ app.get('/auth/google/callback',
   }
 );
   
-  //route for the login page
+  //Route for the login page
   app.post('/login',
     passport.authenticate('local', {
       successRedirect: '/profile',
@@ -133,7 +133,7 @@ app.get('/auth/google/callback',
     })
   );
 
-// Example route for logging out
+//Route for logging out
 app.get('/logout', (req, res) => {
   // Destroy the user session
   req.logout((err) => {
