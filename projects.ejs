@@ -1,0 +1,105 @@
+<!-- projects.ejs -->
+<!--This page will display the user selected project and its information-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Details</title>
+</head>
+<body>
+  <header>
+    <h1 style="text-align: center;"> Now Viewing "<%=project.projectName %> " Project</h1>
+    <a href="/profile" class="logout_btn">Back</a>
+  </header>
+
+  <div class="parallax" style="background-image: url(https://media.giphy.com/media/3o7qDNfxtNRtLVv8qs/giphy.gif);"><!--Project Details-->
+    <h2 style="color: white; text-align: center; font-size:x-large;">Project Details</h2>
+  </div> 
+  <div style="text-align: center;"> <!--Project Description-->
+    <h2>Description</h2>
+    <p class="catsandstars" style="font-stretch: narrower; color: chocolate;"><%= project.project_description %></p>
+  </div>
+  <!----------------Divider Line--------------->
+  <hr class="horizonD-Line">
+  <div><!--div to store multiple database contents horizontally-->
+<!-- ...Adding image styling and implementation... -->
+<div style="text-align: start; height: 30%; display: flex; align-items: center;"> <!--other URL-->
+  <div style="flex: 1;"> <!-- Left side for images -->
+    <h2>Project Images</h2>
+    <p class="imagesContainer" style="color: chocolate;">
+      <% if (project.images) { %>
+        <!-- split a string stored in the project.demo variable 
+          into an array of substrings using adelimiter.-->
+        <% const imagePaths = project.images.split(','); %>
+        <!--store the resulting substring as an array of strings
+          and use them as source to extract the images-->
+        <% imagePaths.forEach(path => { %>
+          <img src="<%= path %>" alt="Project Image" style="max-width: 100%; height: auto;">
+        <% }); %>
+      <% } %>
+    </p>
+  </div>
+
+  <div class="verTicDeviderLine"> </div> <!-- Vertical line to separae videos and images-->
+
+  <div style="flex: 1;"> <!-- adjusting Right side for demo -->
+    <h2>Project Demo</h2>
+    <p class="catsandstars" style="color: chocolate;">
+      <% if (project.demo) { %>
+        <video width="420" height="240" controls>
+          <% const demoPaths = project.demo.split(','); %>
+          <% demoPaths.forEach(path => { %>
+            <source src="<%= path %>" type="video/mp4">
+          <% }); %>
+          Your browser does not support the video tag.
+        </video>
+      <% } %>
+    </p>
+  </div>
+</div>
+<!---------------Horizontal Divider Line--------------->
+<hr class="horizonD-Line">
+<!--Devider for License, contributors and code samples-->
+<div style="text-align: start; height: 30%; display: flex; align-items: center;"> 
+  <div style="flex: 1;"> <!-- Left side for license -->
+    <h2>License Agreement</h2>
+    <p class="liceAndContributes" style="color: chocolate;">
+      <%= project.license %>
+    </p>
+  </div>
+
+  <div class="verTicDeviderLine"> </div> <!-- Vertical line for separation of sections-->
+
+  <div style="flex: 1;"> <!-- adjusting Right side for contributors -->
+    <h2>Fellow Contributors</h2>
+    <p class="liceAndContributes" style="color: chocolate;">
+      <%= project.contributors %>
+    </p>
+    </p>
+  </div>
+</div><!--end of contributors and license-->
+<div style="text-align: center; height: 30%; display: flex; align-items: center;"> 
+  <div style="flex: 1;">
+    <h2>Download Code</h2>
+    <p class="codeSample" style="text-align: center;">
+      <% if (project.code_samples) { %>
+        <% const codePaths = project.code_samples.split(','); %>
+        <% codePaths.forEach(path => { %>
+          <!-- Use anchor tags to create download links -->
+          <a  style="color: green;" href="<%= path %>" download>Download Code</a>
+          <br>
+        <% }); %>
+      <% } %>
+    </p>
+  </div>
+</div>
+
+<!---------------Horizontal Divider Line--------------->
+<hr class="horizonD-Line">
+    <!-- Add other project details as needed in the  horizontal div-->
+  </div>
+</body>
+</html>
