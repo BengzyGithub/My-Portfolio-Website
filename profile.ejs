@@ -1,0 +1,592 @@
+<!-- views/project.ejs -->
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles.css">
+  <title>Profile</title>
+</head>
+
+<body>
+  <!-- Header Section -->
+  <header>
+    <h1 style="text-align: center;">Glad you made it: <%= user.username %></h1>
+    <a href="/logout" class="logout_btn">Log Out</a>
+    <a href="/projects"> view projects</a>
+  </header>
+
+<!------------------Main Section---------------------------->
+<main>
+
+    <!-- Parallax Section with background -->
+    <div class="parallax" style="background-image: url('https://wallpapercave.com/wp/wp2856136.gif');">
+      <p>Tip: Always remember to date your notes, it comes in handy during stressful times</p>
+    </div>
+
+<!--------------------------About Me Section----------------->
+    <div style="text-align: center;">
+      <h2>About Me</h2>
+      <button class="edit-btn" onclick="openEditPanel('editAboutMePanel')">Edit About Me</button>
+      <div id="editAboutMePanel" class="edit-panel">
+        <!-- Content for editing about me information -->
+          <h2>About Me</h2>
+          <form id="aboutMeForm" action="/saveAboutMe" method="post">
+            <label for="full_name">Your Name:</label>
+            <input type="text" id="full_name" name="full_name" required>
+            <br>
+            <label for="bio">Brief bio about you:</label>
+            <textarea id="bio" name="bio" rows="4" required></textarea>
+            <br>
+            <button type="button" id="AboutMeB_id">Save for later </button>
+            <button type="submit" id="saveAboutMe">Submit form</button>
+          </form>
+          <!--close the panel after clicking on the X button-->
+          <button class="close-btn" onclick="closeEditPanel('editAboutMePanel')">&times;</button>
+      </div>
+          <button class="edit-btn" onclick="leftPreviewPanel('leftPanel')">Preview</button>
+    </div>
+
+  <!----------------Divider Line--------------->
+    <hr class="divider">
+
+<!--------------------Edit Projects Section---------------------------->
+    <div style="text-align: center;">
+      <h2>Want to add or view existing Projects?</h2>
+      <button class="edit-btn" onclick="openEditPanel('addProjectPanel')">Add Project</button>
+      <div id="addProjectPanel" class="edit-panel">
+        <!-- Content for editing project information -->
+          <h2>Add Your Projects</h2>
+          <form id="projectsForm" action="/saveProjects" method="post" enctype="multipart/form-data">
+            <label for="projectName">Project Name:</label>
+            <input type="text" id="projectName" name="projectName" required>
+            <br>
+            <!--form field for type of project-->
+            <label for="projectType">Type of Project:</label>
+            <input type="text" id="projectType" name="projectType" required>
+            <br>
+            <!--form field for project Description-->
+            <label for="project_description">Project Description:</label>
+            <textarea id="project_description" name="project_description" rows="4" required></textarea>
+            <br>
+            <!--form field for project url-->
+            <label for="project_url">Project URL:</label>
+            <input type="text" id="project_url" name="project_url" required>
+            <br>
+            <!--form field for thumbnals-->
+            <label style="color:yellow;" for="thumbnail">Add thumbnail:</label>
+            <input type="file" id="thumbnail" name="thumbnail">
+            <br>
+            <!--form field for code presented in project-->
+            <small>Click the + button to add more files and - to delete (code,video,image etc)</small>
+            <br>
+            <label style="color: yellow;" for="code_samples">Add Code:</label>
+            <div id="codeContainer">
+                <div class="file-input-container">
+                    <input type="file" name="code_samples[]" accept="file/*" multiple>
+                    <button type="button" class="deleteFile">-</button>
+                </div>
+            </div>
+            <button type="button" onclick="addFileInput('codeContainer', 'code_samples')">+</button>
+            <br>
+            <!--form field for images in the project-->
+            <label style="color: yellow;" for="images">Add Images (Multiple Files):</label>
+            <div id="imagesContainer">
+                <div class="file-input-container">
+                    <input type="file" name="images[]" accept="image/*" multiple>
+                    <button type="button" class="deleteFile">-</button>
+                </div>
+            </div>
+            <button type="button" onclick="addFileInput('imagesContainer', 'images')">+</button>
+            <br>
+            <!--form field for project demonstration-->
+            <label style="color: yellow;" for="demo">Demo video:</label>
+            <div id="demoContainer">
+                <div class="file-input-container">
+                    <input type="file" name="demo[]" accept="video/*" multiple>
+                    <button type="button" class="deleteFile">-</button>
+                </div>
+            </div>
+            <button type="button" onclick="addFileInput('demoContainer', 'demo')">+</button>
+            <br>
+            <!--form field for status of project-->
+            <label style="color:rgb(79, 13, 221);" for="badges">Project Status:</label>
+            <select name="badges" id="badges">
+                <option value="in-progress">In Progress</option>
+                <option value="complete">Complete</option>
+            </select>
+            <br>
+            <!--form field for how users can test the project-->
+            <label for="testing">Testing Instructions:</label>
+            <textarea id="testing" name="testing" rows="4"></textarea>
+            <br>
+            <!--form field for license for guest to keep in mind when using your code-->
+            <label for="license">License:</label>
+            <textarea id="license" name="license" rows="4"></textarea>
+            <br>
+            <!--form field for anyone else helpin you with this project-->
+            <label for="contributors">Contributors:</label>
+            <input type="text" id="contributors" name="contributors">
+            <br>
+            <!--Buttons to save and add to database -->
+            <button type="button" id="ProjectsB_id">Save for later</button>
+            <button type="submit" id="saveProjects">Add project</button>
+            
+      <script>
+        /*Dynamically add and delete new file input fields for example code when the "+" button is clicked.*/
+        function addFileInput(containerId, fileType) {
+            var container = document.getElementById(containerId);
+            var fileInputContainer = document.createElement('div');
+            fileInputContainer.className = 'file-input-container';
+          
+            var newInput = document.createElement('input');
+            newInput.type = 'file';
+            newInput.name = fileType + '[]'; // Use the fileType parameter to set the name
+            newInput.accept = fileType === 'images' ? 'image/*' : (fileType === 'demo' ? 'video/*' : '*/*');
+            newInput.multiple = true;
+
+            var deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.className = 'deleteFile';
+            deleteButton.textContent = '-';
+
+            deleteButton.addEventListener('click', function () {
+                fileInputContainer.remove();
+            });
+
+            fileInputContainer.appendChild(newInput);
+            fileInputContainer.appendChild(deleteButton);
+
+            container.appendChild(fileInputContainer);
+        }
+      </script>  <!--end of the script that holds adding and removing files-->
+        </form>        
+          <!--close the panel after clicking on the X button-->
+          <button class="close-btn" onclick="closeEditPanel('addProjectPanel')">&times;</button>
+      </div>
+      <!--Button to open Project Preview Panel-->
+      <button id="projectsPreviewBtn" class="edit-btn" onclick="rightPreviewPanel('projectsPanel')">All projects</button>
+      <!--Project Preview Panel-->
+      <div id="projectsPanel" class="projects_Panel" style="text-align: center;" class="project-card">
+        <span class="close-btn" onclick="rightPreviewPanel('projectsPanel')" style="cursor: pointer; float: right;">&times;</span>
+        <h2>Project Table Content </h2>
+        <!----------------Divider Line--------------->
+        <hr class="PanelDivider">
+        <!-- Display user project information -->
+      <div class="project-container">
+        <!-- Inside your 'profile.ejs' template where you display projects -->
+        <% if (projects && projects.length > 0) { %> <!--ensure if at least one project exist within the database-->
+          <ul>
+            <% projects.forEach(project => { %>
+              <li>
+                <div class="project-card">
+                <a href="/projects?id=<%= project.id %>"> Name: <%= project.projectName %></a>
+                <p>Type of Project: <%= project.projectType %></p>
+                <p>Status: <%= project.badges %></p>
+                <% if (project.thumbnail) { %>
+                  <!-- Check if thumbnail exists and display it -->
+                  <img src="<%= project.thumbnail %>" alt="Project Thumbnail" style="max-width: 100%;">
+                <% } else { %>
+                  <!-- Display a placeholder image or some text if thumbnail is not available -->
+                  <p>No thumbnail available</p>
+                <% } %>
+                </div>
+                <!-- Add more project details as needed -->
+              </li>
+            <% }); %>
+          </ul>
+        <% } else { %>
+          <p>No projects available.</p>
+        <% } %>
+      </div>
+    </div>
+    </div> <!--end of Edit project section-->
+
+  <!----------------Divider Line--------------->
+    <hr class="divider">
+  
+<!------------------------Skills Section-------------------------->
+  <div style="text-align: center;">
+    <h2>Add your skills </h2>
+    <button class="edit-btn" onclick="openEditPanel('editSkillsPanel')">Edit Skills</button>
+    <div id="editSkillsPanel" class="edit-panel">
+     <!-- Form Content for editing skills information -->
+     <h2>Add Your Skills</h2>
+      <form id="skillsForm" action="/saveSkills" method="post">
+        <label for="skill_name">Skills:</label>
+        <input type="text" id="skill_name" name="skill_name" required>
+        <br>
+        <button type="button" id="SkillsB_id">Save for later</button>
+        <button type="submit" id="saveSkills">Send Data</button>
+      </form>
+      <!--close the panel after clicking on the X button-->
+      <button class="close-btn" onclick="closeEditPanel('editSkillsPanel')">&times;</button>
+    </div>
+      <button class="edit-btn" onclick="leftPreviewPanel('leftPanel')">Preview</button>
+    </div> <!--end of skills section-->
+
+<!----------------Divider Line--------------->
+  <hr class="divider">
+<!----------------------------work experience section------------------------->
+  <div style="text-align: center;">
+  <h2>Add your work experience</h2>
+    <button class="edit-btn" onclick="openEditPanel('AddExperience')">Edit experience</button>
+  <div id="AddExperience" class="edit-panel">
+    <h2>Your work experience </h2>
+      <form id="workExperienceForm" action="/saveWorkExp" method="post">
+        <label for="employer">Employer Name:</label>
+        <input type="text" id="employer" name="employer" required><br>
+        <label for="position">Position worked:</label>
+        <input type="text" id="position" name="position" required><br>
+        <label for="from_duration">From When?:</label>
+        <input type="date" id="from_duration" name="from_duration" required>
+        <label for="to_duration">To When?</label>
+        <input type="date" id="to_duration" name="to_duration" required><br>
+        <label for="description">Achievements & Responsibilities:</label>
+        <input type="text" id="description" name="description" required><br>
+        <label for="reference">Reference names:</label>
+        <input type="text" id="reference" name="reference"><br>
+        <label for="others">Others Achievements:</label>
+        <input type="text" id="others" name="others"><br>
+        <button type="button" id="WorkExpB_id">Save for later</button>
+        <button type="submit" id="saveWorkExp">Send Data</button>
+      </form>
+      <!--close the panel after clicking on the X button-->
+      <button class="close-btn" onclick="closeEditPanel('AddExperience')">&times;</button>
+    </div>
+    <button class="edit-btn" onclick="leftPreviewPanel('leftPanel')">Preview</button>
+  </div> <!--end of work experience section-->
+
+<!----------------Divider Line--------------->
+<hr class="divider">
+<!----------------------------Education section------------------------->
+  <div style="text-align: center;">
+  <h2>gone to school ?.. Add your Education.</h2>
+    <button class="edit-btn" onclick="openEditPanel('AddEducation')">Edit Education</button>
+  <div id="AddEducation" class="edit-panel">
+    <h2>Your Education </h2>
+      <form id="educationForm" action="/saveEducation" method="post">
+        <label for="school">Institution Name:</label>
+        <input type="text" id="school" name="school" required><br>
+        <label for="major">Your Major</label>
+        <input type="text" id="major" name="major" required><br>
+        <label for="degree">Degree earned? (check if completed):</label>
+        <input type="checkbox" id="degree" name="degree" value="true"><br>
+        <label for="from_duration">from:</label>
+        <input type="date" id="from_duration" name="from_duration" required>
+        <label for="to_duration">To:</label>
+        <input type="date" id="to_duration" name="to_duration" required><br>
+        <label for="gpa">GPA earned (4.0 scale):</label>
+        <input type="text" id="gpa" name="gpa"><br>
+        <label for="awards">scholarships and awards:</label>
+        <input type="text" id="awards" name="awards"><br>
+        <label for="othersfiles">Transcript, Diploma etc..:</label>
+        <input type="file" id="othersfiles" name="othersfiles"><br>
+        <button type="button" id="EducationB_id">Save for later</button>
+        <button type="submit" id="saveEducation">Send Data</button>
+      </form>
+      <!--close the panel after clicking on the X button-->
+      <button class="close-btn" onclick="closeEditPanel('AddEducation')">&times;</button>
+    </div>
+    <button class="edit-btn" onclick="leftPreviewPanel('leftPanel')">Preview</button>
+  </div> <!--end of work experience section-->
+
+  <!----------------Divider Line--------------->
+<hr class="divider">
+
+<!------------------Left Preview Panel for other sections/ dynamically populate data into panel ---------------------------->
+
+<div id="leftPanel" class="leftPreview_Panel" style="text-align: center;">
+  <span class="close-btn" onclick="leftPreviewPanel('leftPanel')" style="cursor: pointer; float: left;">&times;</span>
+  <h2>Previewing your information</h2>
+<!----------------Divider Line--------------->
+<hr class="PanelDivider">
+  <!---------------------About Me Section 2---------------------------->
+  <div class="leftPanel-section" id="aboutMeSection">
+    <h3 style="text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;">About Me</h3>
+    <div class="leftPanel-container">
+      <% if (aboutMe && aboutMe.aboutMe && aboutMe.aboutMe.length > 0) { %>
+        <% aboutMe.aboutMe.forEach(abtMe => { %>
+          <p>Your Name: <%= abtMe.full_name %></p>
+          <p>bioduction: <%= abtMe.bio %></p>
+        <% }); %>
+      <% } else { %>
+        <p>No work experience available.</p>
+      <% } %>
+    </div>
+  </div>
+<!----------------Divider Line--------------->
+<hr class="PanelDivider">
+
+  <!-- Projects Section -->
+  <div class="leftPanel-section" id="projectsSection">
+    <h3 style="text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;">Projects</h3>
+    <div class="leftPanel-container">
+      <% if (projects && projects.projects && projects.projects.length > 0) { %>
+        <% projects.projects.forEach(project => { %>
+          <div class="leftPanel-card">
+            <img src="<%= project.thumbnail %>" alt="Project Thumbnail" style="max-width: 100%; border-radius: 20%;">
+            <p>Project Name:<%= project.projectName %></p>
+            <p>Type: <%= project.projectType %></p>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p>No projects available.</p>
+      <% } %>
+    </div>
+  </div>
+
+<!----------------Divider Line--------------->
+<hr class="PanelDivider">
+ <!-- Skills Section -->
+<div class="leftPanel-section" id="skillsSection">
+  <h3 style="text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;">Skills</h3>
+  <div class="leftPanel-container">
+    <% if (skills && skills.skill_name) { %>
+      <% const skillsArray = skills.skill_name.split(';').map(skill => skill.trim()); %>
+      <% if (skillsArray.length > 0) { %>
+        <% skillsArray.forEach(skill => { %>
+          <p><%= skill.skill_name %></p>
+        <% }); %>
+      <% } else { %>
+        <p>No skills available.</p>
+      <% } %>
+    <% } else { %>
+      <p>No skills available.</p>
+    <% } %>
+  </div>
+</div>
+<!----------------Divider Line--------------->
+<hr class="PanelDivider">
+  <!-- Work Experience Section -->
+  <div class="leftPanel-section" id="workExperienceSection">
+    <h3 style="text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;">Work Experience</h3>
+    <div class="leftPanel-container">
+      <% if (workExperience && workExperience.workExperience && workExperience.workExperience.length > 0) { %>
+        <% workExperience.workExperience.forEach(exp => { %>
+          <p><%= exp.employer %> - <%= exp.position %></p>
+          <p><%= exp.reference %></p>
+        <% }); %>
+      <% } else { %>
+        <p>No work experience available.</p>
+      <% } %>
+    </div>
+  </div>
+<!----------------Divider Line--------------->
+<hr class="PanelDivider">
+  <!-- Education Section -->
+  <div class="leftPanel-section" id="educationSection">
+    <h3 style="text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;">Education</h3>
+    <div class="leftPanel-container">
+      <% if (education && education.education && education.education.length > 0) { %>
+        <% education.education.forEach(edu => { %>
+          <p><%= edu.school %> - <%= edu.major %></p>
+        <% }); %>
+      <% } else { %>
+        <p>No education information available.</p>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+</main> <!-- end of main section -->
+
+
+<script>
+  // Function to validate date format
+  function isValidDate(dateString) {
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    return regex.test(dateString);
+  }
+
+  // Common function to retrieve form data
+  function getDataValues(formId) {
+    const formData = {};
+    const form = document.getElementById(formId);
+
+    if (form) {
+      // Assuming all form inputs have a 'name' attribute
+      Array.from(form.elements).forEach((element) => {
+        if (element.name) {
+          formData[element.name] = element.value;
+        }
+      });
+    }
+
+    return formData;
+  }
+
+  // Open the Edit Panel
+  function openEditPanel(panelId) {
+    const panel = document.getElementById(panelId);
+    panel.classList.add('show');
+  }
+
+  // Close the Edit Panel
+  function closeEditPanel(panelId) {
+    const panel = document.getElementById(panelId);
+    panel.classList.remove('show');
+  }
+
+  // Open the Panel after clicking on a button from the left
+  function rightPreviewPanel(panelId) {
+    const panel = document.getElementById(panelId);
+    panel.classList.toggle('show');
+  }
+
+  // Open the Panel after clicking on a button from the left
+  function leftPreviewPanel(panelId) {
+    const panel = document.getElementById(panelId);
+    panel.classList.toggle('show');
+  }
+  // Function to update the left preview panel with About Me information
+  function updateLeftAboutMePanel() {
+    const formData = getDataValues('aboutMeForm');
+
+    const leftPanelContainer = document.querySelector('#aboutMeSection .leftPanel-container');
+    leftPanelContainer.innerHTML = `
+      <p>Your Name: ${formData.full_name}</p>
+      <p>Your Biography: ${formData.bio}</p>
+    `;
+  }
+
+  // Function to update the left preview panel with small preview
+  function updateLeftProjectsPanel() {
+    const formData = getDataValues('projectsForm');
+
+    const leftPanelContainer = document.querySelector('#projectsSection .leftPanel-container');
+    leftPanelContainer.innerHTML = `
+      <div class="project-card">
+        <h3>Project Name${formData.projectName}</h3>
+        <p>Type: ${formData.projectType}</p>
+        <!-- Add other project details here -->
+      </div>
+    `;
+  }
+
+   // Fetch and display user projects
+   document.getElementById('projectsPreviewBtn').addEventListener('click', function () {
+    // Make an AJAX request to fetch the user's projects
+    $.ajax({
+      type: 'GET',
+      url: '/fetchProjects', // Update the endpoint to the one you use for fetching projects
+      success: function (response) {
+        // Check if the response contains projects
+        if (response && response.projects && response.projects.length > 0) {
+          const projectsContainer = document.getElementById('projectsPanel');
+          projectsContainer.innerHTML = ''; // Clear existing projects
+
+          // Loop through the projects and append them to the #projectsPanel
+          response.projects.forEach(project => {
+            const projectCard = document.createElement('div');
+            projectCard.className = 'project-card';
+            projectCard.innerHTML = `
+              <img src="${project.thumbnail}" alt="Project Thumbnail" style="max-width: 100%;">
+              <p>Project Name : ${project.projectName}</p>
+              <p>Type: ${project.projectType}</p>
+              <p>URL: ${project.project_url}</p>
+              <p>Thumbnail: ${project.thumbnail}</p>
+            `;
+            projectsContainer.appendChild(projectCard);
+          });
+        } else {
+          // Display a message if no projects are available
+          const projectsContainer = document.getElementById('projectsPanel');
+          projectsContainer.innerHTML = '<p>No projects available.</p>';
+        }
+      },
+      error: function (error) {
+        console.error('Error fetching projects:', error);
+        // Handle error if needed
+      }
+    });
+  });
+
+  // Function to update the left preview panel with Sills information
+  function updateLeftSkillsPanel() {
+    const formData = getDataValues('skillsForm');
+
+    const leftPanelContainer = document.querySelector('#skillsSection .leftPanel-container');
+    leftPanelContainer.innerHTML = `
+      <p>Your Skills: ${formData.skill_name}</p>
+    `;
+  }
+
+  /**
+   * Function to update the left preview panel with Sills information
+   */
+  function updateLeftWorkExpPanel() {
+
+    const formData = getDataValues('workExperienceForm');
+
+    const leftPanelContainer = document.querySelector('#workExperienceSection .leftPanel-container');
+    leftPanelContainer.innerHTML = `
+      <p>Employer Name: ${formData.employer}</p>
+      <p>Position worked: ${formData.position}</p>
+      <p>Start time: ${formData.from_duration}</p>
+      <p>Finish time: ${formData.to_duration}</p>
+      <p>responsibilities: ${formData.description}</p>
+      <p>Reference names: ${formData.reference}</p>
+      <p>Other achievements: ${formData.others_achievements}</p>
+    `;
+  }
+
+  /**
+ * Function to update the left preview panel with Education information
+ */
+function updateLefEducationPanel() {
+
+  const formData = getDataValues('educationForm');
+
+  const leftPanelContainer = document.querySelector('#educationSection .leftPanel-container');
+  leftPanelContainer.innerHTML = `
+    <p>Employer Name: ${formData.school}</p>
+    <p>Position worked: ${formData.major}</p>
+    <p>Start time: ${formData.degree}</p>
+    <p>Finish time: ${formData.from_duration}</p>
+    <p>responsibilities: ${formData.to_duration}</p>
+    <p>Reference names: ${formData.gpa}</p>
+    <p>Other achievements: ${formData.awards}</p>
+    <p>Other achievements: ${formData.othersfiles}</p>
+  `;
+}
+  // Update the event listener for the Save About Me button
+  document.getElementById('AboutMeB_id').addEventListener('click', function () {
+    updateLeftAboutMePanel();
+  });
+
+  // Update the event listener for the Save Projects button
+  document.getElementById('ProjectsB_id').addEventListener('click', function () {
+    updateLeftProjectsPanel();
+  });
+
+  // Update the event listener for the Save Skills button
+  document.getElementById('SkillsB_id').addEventListener('click', function () {
+    //call the function for saving skills data
+    updateLeftSkillsPanel();
+  });
+
+ /**
+   * Update the event listener for the work Experience button
+   */
+   document.getElementById('WorkExpB_id').addEventListener('click', function () {
+    //call the function for saving work experience data
+    updateLeftWorkExpPanel();
+  });
+
+  /**
+  * Update the event listener for the education button
+  */
+  document.getElementById('EducationB_id').addEventListener('click', function () {
+  //call the function for saving Education data
+  updateLefEducationPanel();
+  });
+</script>
+
+</body>
+
+</html>
