@@ -1,0 +1,423 @@
+/* styles.css */
+
+ /* Login in page styles */
+ .LoginBody {
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.login-container {
+  text-align: center;
+}
+.login-text-area {
+  padding: 15px 30px;
+  margin-bottom: 10px; /* Adjust the margin as needed */
+  box-shadow: 0 0 30px rgba(72, 8, 137, 0.1);
+  border-color: rgb(217, 123, 8);
+  border-style:inherit;
+  border-radius: 7%;
+}
+
+.SignupModal {
+  display:none;
+  gap: 150px;
+  text-size-adjust: 30%;
+  position: fixed;
+  padding: 15px 30px;
+  margin-bottom: 10px;
+  border-radius: 7%;
+  z-index: 1;
+  left: 50;
+  top: 50;
+  width: 30%;
+  height: 30%;
+  overflow:auto;
+  border: 5px solid red;
+  background-color: yellow;
+  box-shadow: 3px 3px 10px rgba(0 0 0 / 0.5);
+}
+/*Add style for the main divider line */
+.divider {
+  margin: 50px 0;
+  border-top: 1px solid #e31414;
+  border-width: 20%;
+  text-underline-offset: auto;
+}
+/*Panel deviders*/
+.PanelDivider {
+  border: none;
+  border-top: 3px double #333;
+  color: #333;
+  overflow: visible;
+  text-align: center;
+  height: 5px;
+}
+.PanelDivider:after {
+  background: #fff;
+  content: '§';
+  padding: 0 4px;
+  position: relative;
+  top: -13px;
+}
+/*Vertical Devider line in projects page*/
+.verTicDeviderLine {
+  border-left: 1px solid #ccc; 
+  height: 200px; /* Adjusting height of devider */
+  margin: 0 auto;
+  border-left: 1px solid #ccc;
+  border-top: 3px double #333;
+  color: hsl(0, 0%, 20%);
+  overflow: visible;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.verTicDeviderLine:after {
+  background: #fff;
+  content: 'Divider';
+  padding: 0 4px;
+  position: relative;
+  top: -10px;
+}
+
+/*horizontal Devider in projecs page*/
+.horizonD-Line {
+  height: 10px; 
+  border-left: 1px solid #ccc;
+  border-top: 3px double #333;
+  color: hsl(0, 0%, 20%);
+  overflow: visible;
+  text-align: center;
+}
+.horizonD-Line:after {
+  background: #fff;
+  content: '***********';
+  padding: 0 4px;
+  position: relative;
+  top: -13px;
+}
+
+/* Profile Page styles manipulation */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  border-block-start-width: rgba(224, 206, 9, 0.6);
+}
+
+header {
+  text-align:justify;
+  width: auto;
+  padding: 20px 100px;
+  writing-mode: horizontal-tb;
+  direction: rtl;
+  background-color:rgba(217, 235, 17, 0.671);
+  text-emphasis-color: #ffffff;
+  animation-duration: 3s;
+  animation-name: slidein;
+}
+@keyframes slidein {
+  from {
+    margin-left: 100%;
+    width: 300%;
+  }
+
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
+
+.parallax {
+  height: 35px;
+  background-attachment:fixed;
+  background-position: top 25% ;
+  background-repeat: repeat-x;
+  background-size:20%;
+  background-clip: border-box;
+  padding: 10px;
+  border-radius: 10px;
+  border-block-start-width: rgb(170, 50, 220, .6);
+  position: relative;
+  overflow: hidden;
+}
+/*About me modal in profile*/
+.about-me-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 50;
+  top: 50;
+  width: 70%;
+  height: 70%;
+  overflow:auto;
+  border: 5px solid red;
+  background-color: yellow;
+  box-shadow: 3px 3px 10px rgba(0 0 0 / 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  max-width: 600px; /* Set a maximum width for the modal */
+  max-height: 70vh; /* Set a maximum height for the modal */
+  overflow-y: auto; /* Enable vertical overflow scrolling */
+}
+.btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: rgba(25, 165, 225, 0.957);
+  mix-blend-mode:difference;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #d9cc18;
+}
+/*Log out button Hovering and style*/
+.logout_btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  text-align: right;
+  margin-right: 80px;
+  cursor: pointer;
+  background-color: rgb(58, 24, 230);
+  color: hsl(48, 16%, 94%);
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.logout_btn:hover {
+  background-color: rgb(223, 34, 9);
+}
+/*modal style, animating from top to bottom*/
+.w3-animate-top { 
+  position: relative; 
+  animation: animatetop 0.4s; 
+}
+
+/* button spacing within the container */
+.button-container {
+  margin-top: -3%;
+  margin-bottom: 30px; /* Adjust the right margin */
+  display:flex;
+  gap: 150px; /* Adjust the gap between buttons as needed */
+}
+/* styles.css */
+
+.button-container {
+  display:flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+/*Projects paragraph style*/
+.catsandstars {
+  background-image: url("https://wallpapercave.com/wp/wp3684404.gif");
+  background-color: transparent;
+  border-radius: 5%;
+  width: 700px; /* Set a fixed width for the box */
+  height: 300px; /* Set a fixed height for the box */
+  overflow: auto; /* Enable scrolling for content exceeding the box dimensions */
+  padding: 20px; /* Add padding for better readability */
+  margin: 0 auto; /* Center the box horizontally */
+  box-sizing: border-box; /* Include padding and border in the box's total width and height */
+  text-align: justify; /* Align text to justify within the box */
+  text-decoration-style: wavy;
+}
+
+/*Projects image style*/
+.imagesContainer {
+  background-image: url("https://www.pixelstalk.net/wp-content/uploads/2016/08/Free-Digital-Pictures-HD.jpg");
+  background-color: transparent;
+  background-attachment: scroll, local;
+  border-radius: 5%;
+  width: 700px; /* Set a fixed width for the box */
+  height: 500px; /* Set a fixed height for the box */
+  overflow: auto; /* Enable scrolling for content exceeding the box dimensions */
+  padding: 20px; /* Add padding for better readability */
+  margin: 0 auto; /* Center the box horizontally */
+  box-sizing: border-box; /* Include padding and border in the box's total width and height */
+  text-align: justify; /* Align text to justify within the box */
+  text-decoration-style: wavy;
+}
+/*Projects license and contributors style*/
+.liceAndContributes {
+  background-image: url("https://www.pixelstalk.net/wp-content/uploads/2016/08/Free-Digital-Pictures-HD.jpg");
+  background-color: transparent;
+  background-attachment: scroll, local;
+  border-radius: 5%;
+  width: 600px; /* Set a fixed width for the box */
+  height: 300px; /* Set a fixed height for the box */
+  overflow: auto; /* Enable scrolling for content exceeding the box dimensions */
+  padding: 20px; /* Add padding for better readability */
+  margin: 0 auto; /* Center the box horizontally */
+  box-sizing: border-box; /* Include padding and border in the box's total width and height */
+  text-align: justify; /* Align text to justify within the box */
+  text-decoration-style: wavy;
+}
+/*Projects code sample style*/
+.codeSample {
+  background-image: url("https://wallpapercave.com/wp/wp3684404.gif");
+  background-color: transparent;
+  border-radius: 5%;
+  width: 1000px; /* Set a fixed width for the box */
+  height: 100px; /* Set a fixed height for the box */
+  overflow: auto; /* Enable scrolling for content exceeding the box dimensions */
+  padding: 20px; /* Add padding for better readability */
+  margin: 0 auto; /* Center the box horizontally */
+  box-sizing: border-box; /* Include padding and border in the box's total width and height */
+  text-align: justify; /* Align text to justify within the box */
+  text-decoration-style: wavy;
+}
+/*
+*Right Panel styling 
+*/
+.project-container {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20%;
+}
+
+.project-card {
+  border: 1px solid #e3dfdf;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  /*transition: background-color 0.3s ease;*/
+  transition:all .5s ease-in-out .5s; /* Transition for smooth sliding effect */
+}
+
+.project-card:hover {
+  background-color: #48df0c;
+}
+
+.projects_Panel {
+  position: fixed;
+  top: 0;
+  right: -400px; /* Start the panel off-screen */
+  width: 400px;
+  height: 100%;
+  background-color: #107ae4;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  transition:all 2s ease-in-out .5s; /* Transition for smooth sliding effect */
+  overflow-y: auto;
+  padding: 20px;
+  z-index: 1;
+}
+
+.projects_Panel.show {
+  right: 0; /* Slide the panel into view when the "show" class is applied */
+}
+
+/*Left Panel styling*/
+.leftPanel-container {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.leftPanel-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.leftPanel-card:hover {
+  background-color: #10d74c;
+}
+
+.leftPreview_Panel {
+  position: fixed;
+  top: 0;
+  left: -400px; /* Start the panel off-screen */
+  width: 400px;
+  height: 100%;
+  background-color: #107ae4;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  transition:all 2s ease-in-out .5s; /* Transition for smooth sliding effect */
+  overflow-y: auto;
+  padding: 20px;
+  z-index: 1;
+}
+
+.leftPreview_Panel.show {
+  left: 0; /* Slide the panel into view when the "show" class is applied */
+}
+/*styling for a paragraph: ex line paragrph for background image*/
+.parallax p {
+  position: absolute;
+  white-space: nowrap;
+  font-size: large;
+  color: #3e46d8;
+  background-color: #d6e410;
+  animation: slideText 20s linear infinite; /* Adjust the animation duration as needed */
+}
+/*slide the text from right to left*/
+@keyframes slideText {
+  from {
+    transform: translateX(200%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* styles.css */
+
+/* Edit Panel found in profile page */
+
+.profile-section {
+  margin-bottom: 20px;
+}
+
+.edit-panel {
+  display: none;
+  position: fixed;
+  block-size: 150px 150px;
+  overflow-y: auto;
+  writing-mode:sideways-lr;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #46bae8;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5%;
+}
+
+.edit-panel.show {
+  display:block;
+}
+/* Close the Edit Panel button styling */
+.close-btn {
+  position: absolute;
+  top: 10px; /* Adjust the top distance as needed */
+  right: 10px; /* Adjust the right distance as needed */
+  cursor: pointer;
+  font-size: 18px;
+  color: #fff;
+  background-color: #2d23bd;
+  border: none;
+  padding: 5px;
+  border-radius: 50%;
+}
+.close-btn:hover{
+  color: #ee0a0a;
+  background-color: #c8e811;
+}
+
+
+
