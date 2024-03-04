@@ -31,7 +31,7 @@
 <!--------------------------About Me Section----------------->
     <div style="text-align: center;">
       <h2>About Me</h2>
-      <button class="edit-btn" onclick="openEditPanel('editAboutMePanel')">Edit About Me</button>
+      <button class="add-Button" onclick="openEditPanel('editAboutMePanel')">Add to profile</button>
       <div id="editAboutMePanel" class="edit-panel">
         <!-- Content for editing about me information -->
           <h2>About Me</h2>
@@ -42,13 +42,13 @@
             <label for="bio">Brief bio about you:</label>
             <textarea id="bio" name="bio" rows="4" required></textarea>
             <br>
-            <button type="button" id="AboutMeB_id">Save for later </button>
+            <button type="button" id="AboutMeB_id">Draft</button>
             <button type="submit" id="saveAboutMe">Submit form</button>
           </form>
           <!--close the panel after clicking on the X button-->
           <button class="close-btn" onclick="closeEditPanel('editAboutMePanel')">&times;</button>
       </div>
-          <button class="edit-btn" onclick="leftPreviewPanel('leftPanel')">Preview</button>
+          <button class="preview-btn" onclick="leftPreviewPanel('leftPanel')">Preview</button>
     </div>
 
   <!----------------Divider Line--------------->
@@ -57,7 +57,7 @@
 <!--------------------Edit Projects Section---------------------------->
     <div style="text-align: center;">
       <h2>Want to add or view existing Projects?</h2>
-      <button class="edit-btn" onclick="openEditPanel('addProjectPanel')">Add Project</button>
+      <button class="add-Button" onclick="openEditPanel('addProjectPanel')">Add Project</button>
       <div id="addProjectPanel" class="edit-panel">
         <!-- Content for editing project information -->
           <h2>Add Your Projects</h2>
@@ -133,7 +133,7 @@
             <input type="text" id="contributors" name="contributors">
             <br>
             <!--Buttons to save and add to database -->
-            <button type="button" id="ProjectsB_id">Save for later</button>
+            <button type="button" id="ProjectsB_id">Draft</button>
             <button type="submit" id="saveProjects">Add project</button>
             
       <script>
@@ -169,7 +169,7 @@
           <button class="close-btn" onclick="closeEditPanel('addProjectPanel')">&times;</button>
       </div>
       <!--Button to open Project Preview Panel-->
-      <button id="projectsPreviewBtn" class="edit-btn" onclick="rightPreviewPanel('projectsPanel')">All projects</button>
+      <button id="projectsPreviewBtn" class="View-Projects" onclick="rightPreviewPanel('projectsPanel')">All projects</button>
       <!--Project Preview Panel-->
       <div id="projectsPanel" class="projects_Panel" style="text-align: center;" class="project-card">
         <span class="close-btn" onclick="rightPreviewPanel('projectsPanel')" style="cursor: pointer; float: right;">&times;</span>
@@ -212,7 +212,7 @@
 <!------------------------Skills Section-------------------------->
   <div style="text-align: center;">
     <h2>Add your skills </h2>
-    <button class="edit-btn" onclick="openEditPanel('editSkillsPanel')">Edit Skills</button>
+    <button class="add-Button" onclick="openEditPanel('editSkillsPanel')">Add skills</button>
     <div id="editSkillsPanel" class="edit-panel">
      <!-- Form Content for editing skills information -->
      <h2>Add Your Skills</h2>
@@ -220,13 +220,13 @@
         <label for="skill_name">Skills:</label>
         <input type="text" id="skill_name" name="skill_name" required>
         <br>
-        <button type="button" id="SkillsB_id">Save for later</button>
+        <button type="button" id="SkillsB_id">Draft</button>
         <button type="submit" id="saveSkills">Send Data</button>
       </form>
       <!--close the panel after clicking on the X button-->
       <button class="close-btn" onclick="closeEditPanel('editSkillsPanel')">&times;</button>
     </div>
-      <button class="edit-btn" onclick="leftPreviewPanel('leftPanel')">Preview</button>
+      <button class="preview-btn" onclick="leftPreviewPanel('leftPanel')">Preview</button>
     </div> <!--end of skills section-->
 
 <!----------------Divider Line--------------->
@@ -234,7 +234,7 @@
 <!----------------------------work experience section------------------------->
   <div style="text-align: center;">
   <h2>Add your work experience</h2>
-    <button class="edit-btn" onclick="openEditPanel('AddExperience')">Edit experience</button>
+    <button class="add-Button" onclick="openEditPanel('AddExperience')">Add EXP</button>
   <div id="AddExperience" class="edit-panel">
     <h2>Your work experience </h2>
       <form id="workExperienceForm" action="/saveWorkExp" method="post">
@@ -252,13 +252,13 @@
         <input type="text" id="reference" name="reference"><br>
         <label for="others">Others Achievements:</label>
         <input type="text" id="others" name="others"><br>
-        <button type="button" id="WorkExpB_id">Save for later</button>
+        <button type="button" id="WorkExpB_id">Draft</button>
         <button type="submit" id="saveWorkExp">Send Data</button>
       </form>
       <!--close the panel after clicking on the X button-->
       <button class="close-btn" onclick="closeEditPanel('AddExperience')">&times;</button>
     </div>
-    <button class="edit-btn" onclick="leftPreviewPanel('leftPanel')">Preview</button>
+    <button class="preview-btn" onclick="leftPreviewPanel('leftPanel')">Preview</button>
   </div> <!--end of work experience section-->
 
 <!----------------Divider Line--------------->
@@ -266,7 +266,7 @@
 <!----------------------------Education section------------------------->
   <div style="text-align: center;">
   <h2>gone to school ?.. Add your Education.</h2>
-    <button class="edit-btn" onclick="openEditPanel('AddEducation')">Edit Education</button>
+    <button class="add-Button" onclick="openEditPanel('AddEducation')">Add Edu</button>
   <div id="AddEducation" class="edit-panel">
     <h2>Your Education </h2>
       <form id="educationForm" action="/saveEducation" method="post">
@@ -286,13 +286,13 @@
         <input type="text" id="awards" name="awards"><br>
         <label for="othersfiles">Transcript, Diploma etc..:</label>
         <input type="file" id="othersfiles" name="othersfiles"><br>
-        <button type="button" id="EducationB_id">Save for later</button>
+        <button type="button" id="EducationB_id">Draft</button>
         <button type="submit" id="saveEducation">Send Data</button>
       </form>
       <!--close the panel after clicking on the X button-->
       <button class="close-btn" onclick="closeEditPanel('AddEducation')">&times;</button>
     </div>
-    <button class="edit-btn" onclick="leftPreviewPanel('leftPanel')">Preview</button>
+    <button class="preview-btn" onclick="leftPreviewPanel('leftPanel')">Preview</button>
   </div> <!--end of work experience section-->
 
   <!----------------Divider Line--------------->
@@ -394,7 +394,6 @@
 </div>
 
 </main> <!-- end of main section -->
-
 
 <script>
   // Function to validate date format
