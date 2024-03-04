@@ -83,6 +83,7 @@
   padding: 0 4px;
   position: relative;
   top: -10px;
+  display: none;
 }
 
 /*horizontal Devider in projecs page*/
@@ -418,6 +419,39 @@ header {
   color: #ee0a0a;
   background-color: #c8e811;
 }
-
-
-
+/*Add, update and edit buttons*/
+.add-Button{
+  color:black;
+  cursor: pointer;
+  font-size: medium;
+  border-radius: 30%;
+  border-style:dashed;
+  background-color: #48df0c;
+}
+.add-Button::shadow{
+  color: #c8e811;
+}
+.add-Button:hover{
+  color: #3410d7;
+  background-color:#c8e811;
+}
+/*Preview left panel buttons*/
+.preview-btn{
+  color: #d9cc18;
+  cursor: pointer;
+  font-size: medium;
+  border-radius: 10% 30% 50% 70%;
+  border-style:groove;
+  background-color:blue;
+  box-shadow: #e31414;
+}
+/*Preview Right panel button/all projects*/
+.View-Projects{
+  color: #1b18d9;
+  cursor: pointer;
+  font-size: medium;
+  border-radius: 10% 100% 100% 10%;
+  border-style:dotted;
+  background-color:yellow;
+  box-shadow: #e31414;
+}
